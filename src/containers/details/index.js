@@ -7,41 +7,78 @@ export default class Details extends Component {
 		super(props);
 		this.state = {
 			originData: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
-			showlist: [14,15,0,1,2],
-			boxwidth: null,
-			originTran: 0
+			showlist: [14,15,0,1,2]
 		};
+		this.itemWidth = null;
+		this.startPos = null;
+		this.tranbox = null;
 	}
 
 	componentWillMount () {
-		const boxwidth = Math.min(window.innerWidth, window.innerHeight);
+		this.itemWidth = Math.min(window.innerWidth, window.innerHeight);
+		this.startPos = this.itemWidth * -2;
+
+	}
+
+	componentDidMount() {
+		this.init();
+	}
+
+	init = () => {
+		this.tranbox.style.left = `${this.startPos}px`;
+	}
+
+	onAddEventListener = () => {
+		this.tranbox.addEventListener('transitionend', this.handleTransformEnd);
+	}
+
+	onRemoveListener = () => {
+		this.tranbox.removeEventListener('transitionend', this.handleTransformEnd);
+	}
+
+	handleTransformEnd = () => {
+		this.onRemoveListener();
+		const {showlist} = this.state;
+		const newList = [6, ...showlist.slice(0, showlist.length - 1)];
 		this.setState({
-			boxwidth,
-			originTran: boxwidth * -2
+			showlist: newList
+		}, () => {
+			this.tranbox.style.transform = 'translateX(0px)';
+			this.tranbox.style.transitionDuration = '0s';
 		});
-		console.log(boxwidth);
+		console.log(showlist);
+	}
+
+	handleLast = () => {
+		this.onAddEventListener();
+		this.tranbox.style.transform = `translateX(${this.itemWidth}px)`;
+		this.tranbox.style.transitionDuration = '1s';
+	}
+
+	handleNext = () => {
+		this.onAddEventListener();
+		this.tranbox.style.transform = `translateX(-${this.itemWidth}px)`;
+		this.tranbox.style.transitionDuration = '1s';
 	}
 
 	render() {
-		const {showlist, boxwidth, originTran} = this.state;
+		const {showlist} = this.state;
 		const tranboxStyle = {
-			width: showlist.length * boxwidth,
-			height:`${boxwidth}px`,
-			'-webkit-transform': `translateX(${originTran}px)`,
-			transform: `translateX(-${originTran}px)`,
-			'transition-duration': '1s'
+			width: showlist.length * this.itemWidth,
+			height:`${this.itemWidth}px`
 		};
-		const itemStyle = {width:`${boxwidth}px`, height:`${boxwidth}px` };
+		const itemStyle = {width:`${this.itemWidth}px`, height:`${this.itemWidth}px` };
 		return (
 			<div class={s.root}>
 				<div className={s.slidebox} style={itemStyle}>
-					<div className={`${s.tranbox} clearfix`} style={tranboxStyle}>
+					<div ref={el=>{this.tranbox = el;}} className={`${s.tranbox} clearfix`} style={tranboxStyle}>
 						{
 							showlist.map((item) => (<div className={s.slideitem} style={itemStyle}>{item}</div>))
 						}
 					</div>
 				</div>
-				details
+				<button onClick={this.handleLast}>上一页</button>
+				<button onClick={this.handleNext}>下一页</button>
 			</div>
 		);
 	}
