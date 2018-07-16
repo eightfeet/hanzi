@@ -3,3 +3,16 @@
 	min-height: 100%;
 	background: #EEE;
 }
+.slidebox {
+	overflow: hidden;
+	margin: 0 auto;
+	background: gray;
+	position: relative;
+}
+.tranbox {
+	position: absolute;
+	height: 100%;
+}
+.slideitem {
+	float: left;
+}
