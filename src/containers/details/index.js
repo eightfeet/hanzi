@@ -53,11 +53,19 @@ export default class Details extends Component {
 		const {showlist, originData} = this.state;
 		const currentInd = parseInt(this.tranbox.getAttribute('data-index'), 0);
 		let newList = [];
+		let index = null;
 		if (this.direction === 'next') {
-			newList = [...showlist.slice(1, showlist.length), originData[currentInd + 3]];
+			index = (currentInd + 3) % originData.length;
+			newList = [...showlist.slice(1, showlist.length), originData[index]];
 		}
 		if (this.direction === 'last') {
-			newList = [originData[currentInd - 3], ...showlist.slice(0, showlist.length - 1)];
+			const dataindex = currentInd - 3;
+			if (dataindex < 0) {
+				index = originData.length + dataindex;
+			} else {
+				index = dataindex;
+			}
+			newList = [originData[index], ...showlist.slice(0, showlist.length - 1)];
 		}
 		this.setState({
 			showlist: newList
@@ -70,12 +78,24 @@ export default class Details extends Component {
 	}
 
 	oprationDataIndex = () => {
+		const {originData} = this.state;
 		const index = parseInt(this.tranbox.getAttribute('data-index'), 0);
+		let opreatIndex = null;
 		if (this.direction === 'next') {
-			this.tranbox.setAttribute('data-index', index + 1);
+			opreatIndex = index + 1;
+			if (opreatIndex > originData.length) {
+				opreatIndex = 0;
+			}
+			this.tranbox.setAttribute('data-index', opreatIndex);
 		}
 		if (this.direction === 'last') {
-			this.tranbox.setAttribute('data-index', index - 1);
+			opreatIndex = index - 1;
+			console.log('opreatIndex', opreatIndex);
+			if (opreatIndex < 0) {
+				opreatIndex = originData.length;
+			}
+			console.log('opreatIndex', opreatIndex);
+			this.tranbox.setAttribute('data-index', opreatIndex);
 		}
 	}
 
