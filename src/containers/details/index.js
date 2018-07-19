@@ -6,7 +6,7 @@ export default class Details extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			originData: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+			originData: [0,1,2,3,4,5,6,7,8],
 			showlist: []
 		};
 		this.itemWidth = null;
@@ -83,26 +83,27 @@ export default class Details extends Component {
 		let opreatIndex = null;
 		if (this.direction === 'next') {
 			opreatIndex = index + 1;
-			if (opreatIndex > originData.length) {
+			if (opreatIndex >= originData.length) {
 				opreatIndex = 0;
 			}
 			this.tranbox.setAttribute('data-index', opreatIndex);
 		}
 		if (this.direction === 'last') {
 			opreatIndex = index - 1;
-			console.log('opreatIndex', opreatIndex);
-			if (opreatIndex < 0) {
-				opreatIndex = originData.length;
+			if (index <= 0) {
+				opreatIndex = originData.length - 1 + index;
+			} else {
+				opreatIndex = index - 1;
 			}
-			console.log('opreatIndex', opreatIndex);
+			console.log('opreatIndex1', opreatIndex);
 			this.tranbox.setAttribute('data-index', opreatIndex);
+			console.log('opreatIndex1', opreatIndex);
 		}
 	}
 
 	handleLast = () => {
 		this.onAddEventListener();
 		this.direction = 'last';
-		this.tranbox.setAttribute('data-index', 0);
 		this.tranbox.style.transform = `translateX(${this.itemWidth}px)`;
 		this.tranbox.style.transitionDuration = '1s';
 	}
