@@ -49,9 +49,17 @@ class Details extends Component {
 	init = () => {
 		this.tranbox.style.left = `${this.startPos}px`;
 		this.tranbox.setAttribute('data-index', 0);
-		const text = window.localStorage.getItem('querry') || '';
+		let text = window.localStorage.getItem('querry') || '';
+
+		if (text.length < 6) {
+			for (let index = 0; index < 6; index++) {
+				text += text;
+			}
+		}
+
+		text = text.split('');
 		this.setState({
-			originData: text.split('')
+			originData: text
 		}, this.setData);
 	}
 
@@ -168,19 +176,23 @@ class Details extends Component {
 			height:`${this.itemWidth}px`
 		};
 		const itemStyle = {width:`${this.itemWidth}px`, height:`${this.itemWidth}px` };
+		const itemBox = {width:`${this.itemWidth}px`, height:`${this.itemWidth + 50}px` };
 		return (
 			<div class={s.root}>
 				<div className={s.slidebox}
-					style={itemStyle}
+					style={itemBox}
 					onTouchStart={this.onTouchStart}
 					onTouchMove={this.onTouchMove}
 					onTouchEnd={this.onTouchEnd}
 				>
 					<div ref={el=>{this.tranbox = el;}} className={`${s.tranbox} clearfix`} style={tranboxStyle}>
 						{
-							showlist.map((item) => (<div className={s.slideitem} style={itemStyle}>
-								<img src={`./assets/imgs/${item}.gif`} />
-							</div>))
+							showlist.map((item) => (
+								<div className={s.slideitem} style={itemBox}>
+									<img src={`./assets/imgs/${item}.gif`}  style={itemStyle} />
+									<p className="al-c pdt1">{item}</p>
+								</div>
+							))
 						}
 					</div>
 				</div>
