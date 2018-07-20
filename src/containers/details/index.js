@@ -1,23 +1,39 @@
 import { h, Component } from 'preact';
+import { slope } from './helper';
 import s from './style.scss';
 
-export default class Details extends Component {
+class Details extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			originData: [0,1,2,3,4,5,6,7,8],
+			originData: [],
 			showlist: []
 		};
 		this.itemWidth = null;
 		this.startPos = null;
 		this.tranbox = null;
 		this.direction = 'next';
+		this.touchX = {
+			start: null,
+			end: null
+		};
+		this.touchY = {
+			start: null,
+			end: null
+		};
 	}
 
 	componentWillMount () {
 		this.itemWidth = Math.min(window.innerWidth, window.innerHeight);
 		this.startPos = this.itemWidth * -2;
+	}
+
+	componentDidMount() {
+		this.init();
+	}
+
+	setData = () => {
 		const {originData} = this.state;
 		let showlist = [];
 		if (originData.length <= 5) {
@@ -28,16 +44,15 @@ export default class Details extends Component {
 		this.setState({
 			showlist
 		});
-
-	}
-
-	componentDidMount() {
-		this.init();
 	}
 
 	init = () => {
 		this.tranbox.style.left = `${this.startPos}px`;
 		this.tranbox.setAttribute('data-index', 0);
+		const text = window.localStorage.getItem('querry') || '';
+		this.setState({
+			originData: text.split('')
+		}, this.setData);
 	}
 
 	onAddEventListener = () => {
@@ -73,7 +88,6 @@ export default class Details extends Component {
 			this.tranbox.style.transform = 'translateX(0px)';
 			this.tranbox.style.transitionDuration = '0s';
 			this.oprationDataIndex();
-			console.log(this.state.showlist);
 		});
 	}
 
@@ -95,9 +109,7 @@ export default class Details extends Component {
 			} else {
 				opreatIndex = index - 1;
 			}
-			console.log('opreatIndex1', opreatIndex);
 			this.tranbox.setAttribute('data-index', opreatIndex);
-			console.log('opreatIndex1', opreatIndex);
 		}
 	}
 
@@ -115,7 +127,41 @@ export default class Details extends Component {
 		this.tranbox.style.transitionDuration = '1s';
 	}
 
+	onTouchStart = (e) => {
+		this.touchX = {
+			start: null,
+			end: null
+		};
+		this.touchY = {
+			start: null,
+			end: null
+		};
+		this.touchX.start = e.touches[0].screenX;
+		this.touchY.start = e.touches[0].screenY;
+	}
+
+	onTouchMove = (e) => {
+		this.touchX.end = e.touches[0].screenX;
+		this.touchY.end = e.touches[0].screenY;
+	}
+
+	onTouchEnd = () => {
+		const rate = slope(this.touchX.end - this.touchX.start, this.touchY.end - this.touchY.start, 30);
+
+		if (rate !== -1) {
+			return;
+		}
+		const { start, end } = this.touchX;
+		if (start > end && start - end > 20) {
+			this.handleNext();
+		}
+		if (start < end && end - start > 20) {
+			this.handleLast();
+		}
+	}
+
 	render() {
+		console.log(this.props.querry);
 		const {showlist} = this.state;
 		const tranboxStyle = {
 			width: showlist.length * this.itemWidth,
@@ -124,17 +170,23 @@ export default class Details extends Component {
 		const itemStyle = {width:`${this.itemWidth}px`, height:`${this.itemWidth}px` };
 		return (
 			<div class={s.root}>
-				<div className={s.slidebox} style={itemStyle}>
+				<div className={s.slidebox}
+					style={itemStyle}
+					onTouchStart={this.onTouchStart}
+					onTouchMove={this.onTouchMove}
+					onTouchEnd={this.onTouchEnd}
+				>
 					<div ref={el=>{this.tranbox = el;}} className={`${s.tranbox} clearfix`} style={tranboxStyle}>
 						{
-							showlist.map((item) => (<div className={s.slideitem} style={itemStyle}>{item}</div>))
+							showlist.map((item) => (<div className={s.slideitem} style={itemStyle}>
+								<img src={`./assets/imgs/${item}.gif`} />
+							</div>))
 						}
 					</div>
 				</div>
-				<button onClick={this.handleLast}>上一页</button>
-				<button onClick={this.handleNext}>下一页</button>
 			</div>
 		);
 	}
 }
 
+export default Details;
