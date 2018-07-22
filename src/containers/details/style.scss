@@ -20,3 +20,56 @@
 		height: 100%;
 	}
 }
+
+.bar{
+	position: absolute;
+	height: 3rem;
+	width: 100%;
+	bottom: 1rem;
+	text-align: center;
+}
+
+.root {
+	height: 100%;
+	position: relative;
+}
+
+.left {
+	position: absolute;
+	display: block;
+	height: 3rem;
+	width: 3rem;
+	line-height: 3rem;
+	left: 1rem;
+	color: #fff;
+	background-color: #eee;
+	border-radius: 4rem;
+}
+
+.right {
+	position: absolute;
+	display: block;
+	height: 3rem;
+	width: 3rem;
+	line-height: 3rem;
+	bottom: 0;
+	right: 1rem;
+	color: #fff;
+	background-color: #eee;
+	border-radius: 4rem;
+}
+
+.center {
+	font-size: 2rem;
+	position: absolute;
+	display: block;
+	height: 3rem;
+	width: 3rem;
+	line-height: 3rem;
+	bottom: 0;
+	left: 50%;
+	margin-left: -1.5rem;
+	color: #fff;
+	background-color: #eee;
+	border-radius: 4rem;
+}

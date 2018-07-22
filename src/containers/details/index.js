@@ -84,6 +84,10 @@ class Details extends Component {
 		}, this.setData);
 	}
 
+	goHome = () => {
+		history.push('/');
+	}
+
 	onAddEventListener = () => {
 		this.tranbox.addEventListener('transitionend', this.handleTransformEnd);
 	}
@@ -199,7 +203,8 @@ class Details extends Component {
 		const {showlist} = this.state;
 		const tranboxStyle = {
 			width: showlist.length * this.itemWidth,
-			height:`${this.itemWidth}px`
+			height:`${this.itemWidth}px`,
+			'transition-duration': '100ms'
 		};
 		const itemStyle = {width:`${this.itemWidth}px`, height:`${this.itemWidth}px` };
 		const itemBox = {width:`${this.itemWidth}px`, height:`${this.itemWidth + 50}px` };
@@ -221,6 +226,17 @@ class Details extends Component {
 							))
 						}
 					</div>
+				</div>
+				<div className={s.bar}>
+					<span
+						className={`icon-arrow-left ${s.left}`}
+						onClick={this.handleLast}
+					>&nbsp;</span>
+					<i onClick={this.goHome} className={`icon-home-a ${s.center}`} />
+					<span
+						className={`icon-arrow-right ${s.right}`}
+						onClick={this.handleNext}
+					>&nbsp;</span>
 				</div>
 			</div>
 		);
