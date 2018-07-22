@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { slope } from './helper';
+import history from '~/core/history';
 import s from './style.scss';
 
 class Details extends Component {
@@ -49,7 +50,13 @@ class Details extends Component {
 	init = () => {
 		this.tranbox.style.left = `${this.startPos}px`;
 		this.tranbox.setAttribute('data-index', 0);
-		let text = window.localStorage.getItem('querry') || '';
+		let text = window.localStorage.getItem('querry');
+
+		if (!text) {
+			history.push('/');
+			text = '';
+			return;
+		}
 
 		if (text.length < 6) {
 			for (let index = 0; index < 6; index++) {
@@ -136,6 +143,7 @@ class Details extends Component {
 	}
 
 	onTouchStart = (e) => {
+		e.preventDefault();
 		this.touchX = {
 			start: null,
 			end: null
@@ -168,6 +176,10 @@ class Details extends Component {
 		}
 	}
 
+	onError = (e) => {
+		console.log(e.target.src="./assets/imgs/error.png");
+	}
+
 	render() {
 		console.log(this.props.querry);
 		const {showlist} = this.state;
@@ -189,7 +201,7 @@ class Details extends Component {
 						{
 							showlist.map((item) => (
 								<div className={s.slideitem} style={itemBox}>
-									<img src={`./assets/imgs/${item}.gif`}  style={itemStyle} />
+									<img onError={this.onError} src={`./assets/imgs/${item}.gif`}  style={itemStyle} />
 									<p className="al-c pdt1">{item}</p>
 								</div>
 							))
