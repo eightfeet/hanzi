@@ -3,6 +3,20 @@ import { slope } from './helper';
 import history from '~/core/history';
 import s from './style.scss';
 
+// pushHistory();
+
+// window.addEventListener("popstate", () => {
+// 	window.location = './';
+// }, false);
+
+// function pushHistory() {
+// 	let state = {
+// 		title: "title",
+// 		url: "#"
+// 	};
+// 	window.history.pushState(state, "title", "#");
+// }
+
 class Details extends Component {
 
 	constructor(props) {
@@ -202,7 +216,7 @@ class Details extends Component {
 							showlist.map((item) => (
 								<div className={s.slideitem} style={itemBox}>
 									<img onError={this.onError} src={`./assets/imgs/${item}.gif`}  style={itemStyle} />
-									<p className="al-c pdt1">{item}{this.tranbox.getAttribute('data-index')}</p>
+									<p className="al-c pdt1">{item}</p>
 								</div>
 							))
 						}

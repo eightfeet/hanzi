@@ -5,12 +5,10 @@ import { bindActionCreators } from 'redux';
 import validate from 'validate-by-health';
 import { setRuntimeVariable } from '~/actions/user';
 import history from '~/core/history';
-import blackwhite from './blackwhite.png';
-
+import blackwhite from './headicon.png';
 import s from './scss';
 
 class Home extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -19,6 +17,14 @@ class Home extends Component {
 			error: null
 		};
 	}
+
+	componentWillUnmount () {
+		this.setState({
+			textInp: '',
+			error: null
+		});
+	}
+
 
 	onSubmit = () => {
 		const error = validate({
@@ -30,10 +36,11 @@ class Home extends Component {
 			});
 			return;
 		}
+		window.localStorage.setItem('querry', this.state.textInp);
 		this.setState({
+			textInp: '',
 			error: null
 		});
-		window.localStorage.setItem('querry', this.state.textInp);
 		setTimeout(() => history.push('/details') );
 	}
 
@@ -45,7 +52,7 @@ class Home extends Component {
 
 
 	render() {
-		const {error} = this.state;
+		const {error, textInp} = this.state;
 		return (
 			<div class={s.home}>
 				<div className="formBox">
@@ -54,7 +61,7 @@ class Home extends Component {
 							<img src={blackwhite} className="w4" />
 						</div>
 						{error && <div className="al-c pd-1 bg-red white al-c radius-smaller mgb-5">{error}</div>}
-						<input className="ww mgb1" onChange={this.onTextChange} type="text"/>
+						<input className="ww mgb1" onChange={this.onTextChange} type="text" value={textInp}/>
 						<button className="white bg-gray pd-5 ww radius-smaller" onClick={this.onSubmit}>确定</button>
 					</div>
 				</div>
