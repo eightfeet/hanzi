@@ -177,7 +177,7 @@ class Details extends Component {
 	}
 
 	onError = (e) => {
-		console.log(e.target.src="./assets/imgs/error.png");
+		e.target.setAttribute('set', './assets/imgs/error.png');
 	}
 
 	render() {
