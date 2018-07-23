@@ -196,6 +196,8 @@ class Details extends Component {
 
 	onError = (e) => {
 		e.target.setAttribute('src', './assets/imgs/error.png');
+		e.target.style.zIndex = 6;
+		e.target.style.position = 'absolute';
 	}
 
 	render() {
@@ -221,7 +223,7 @@ class Details extends Component {
 							showlist.map((item) => (
 								<div className={s.slideitem} style={itemBox}>
 									<div style={itemStyle} className={s.imgbox}>
-										<img className={s.gray} onError={this.onError} src={`./assets/imgs/${item}.gif`}  style={itemStyle} />
+										<img className={s.gray} onError={this.onError} src={`./assets/imgs/${item}.gif`}  style={{...itemStyle, position: 'absolute', zIndex: 5}} />
 										<img className={s.mask} src="./assets/bottom.png" />
 									</div>
 									<p className="al-c pdt1">{item}</p>
