@@ -220,14 +220,10 @@ class Details extends Component {
 						{
 							showlist.map((item) => (
 								<div className={s.slideitem} style={itemBox}>
-									<div
-										className={s.mask}
-										style={{
-											top: this.itemWidth - this.itemWidth/11 - 10,
-											height: this.itemWidth/11
-										}}
-									>&nbsp;</div>
-									<img className={s.gray} onError={this.onError} src={`./assets/imgs/${item}.gif`}  style={itemStyle} />
+									<div style={itemStyle} className={s.imgbox}>
+										<img className={s.gray} onError={this.onError} src={`./assets/imgs/${item}.gif`}  style={itemStyle} />
+										<img className={s.mask} src="./assets/bottom.png" />
+									</div>
 									<p className="al-c pdt1">{item}</p>
 								</div>
 							))
