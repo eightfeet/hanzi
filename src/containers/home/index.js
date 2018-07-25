@@ -46,7 +46,8 @@ class Home extends Component {
 
 	onTextChange = (e) => {
 		this.setState({
-			textInp: e.target.value
+			// 替换非中文
+			textInp: e.target.value.replace(/([^\u4e00-\u9fa5])/g,'')
 		});
 	}
 
