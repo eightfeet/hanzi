@@ -224,7 +224,7 @@ class Details extends Component {
 								<div className={s.slideitem} style={itemBox}>
 									<div style={itemStyle} className={s.imgbox}>
 										<img onError={this.onError} src={`./assets/imgs/${item}.gif`}  style={{...itemStyle, position: 'absolute', zIndex: 5}} />
-										<img className={s.mask} src="./assets/bottom.png" />
+										<img className={s.mask} src="./assets/bottom.gif" />
 									</div>
 									<p className="al-c pdt1">{item}</p>
 								</div>
