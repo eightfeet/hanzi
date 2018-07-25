@@ -61,8 +61,8 @@ class Home extends Component {
 							<img src={blackwhite} className="w4" />
 						</div>
 						{error && <div className="al-c pd-1 bg-red white al-c radius-smaller mgb-5">{error}</div>}
-						<input className="ww mgb1" onChange={this.onTextChange} type="text" value={textInp}/>
-						<button className="white bg-gray pd-5 ww radius-smaller" onClick={this.onSubmit}>确定</button>
+						<input className="ww mgb1 font" onwebkitspeechchange={this.onTextChange} onChange={this.onTextChange} type="text" value={textInp} x-webkit-speech />
+						<button className="white font bg-gray pd-5 ww radius-smaller" onClick={this.onSubmit}>确定</button>
 					</div>
 				</div>
 			</div>
