@@ -93,7 +93,9 @@ class Details extends Component {
 	}
 
 	onRemoveListener = () => {
-		this.tranbox.removeEventListener('transitionend', this.handleTransformEnd);
+		if (this.tranbox) {
+			this.tranbox.removeEventListener('transitionend', this.handleTransformEnd);
+		}
 	}
 
 	handleTransformEnd = () => {
