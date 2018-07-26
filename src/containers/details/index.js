@@ -152,14 +152,14 @@ class Details extends Component {
 		this.onAddEventListener();
 		this.direction = 'last';
 		this.tranbox.style.transform = `translateX(${this.itemWidth}px)`;
-		this.tranbox.style.transitionDuration = '1s';
+		this.tranbox.style.transitionDuration = '500ms';
 	}
 
 	handleNext = () => {
 		this.onAddEventListener();
 		this.direction = 'next';
 		this.tranbox.style.transform = `translateX(-${this.itemWidth}px)`;
-		this.tranbox.style.transitionDuration = '1s';
+		this.tranbox.style.transitionDuration = '500ms';
 	}
 
 	onTouchStart = (e) => {
