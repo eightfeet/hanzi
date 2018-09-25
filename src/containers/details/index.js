@@ -41,6 +41,9 @@ class Details extends Component {
 
 	componentWillMount () {
 		this.itemWidth = Math.min(window.innerWidth, window.innerHeight);
+		if (this.itemWidth > 400) {
+			this.itemWidth = 400;
+		}
 		this.startPos = this.itemWidth * -2;
 	}
 
@@ -211,7 +214,7 @@ class Details extends Component {
 			'transition-duration': '100ms'
 		};
 		const itemStyle = {width:`${this.itemWidth}px`, height:`${this.itemWidth}px` };
-		const itemBox = {width:`${this.itemWidth}px`, height:`${this.itemWidth + 50}px` };
+		const itemBox = {width:`${this.itemWidth}px`, height:`${this.itemWidth + 80}px` };
 		return (
 			<div class={s.root}>
 				<div className={s.slidebox}

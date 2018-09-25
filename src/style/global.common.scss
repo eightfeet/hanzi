@@ -409,10 +409,6 @@ body {
     margin: 0 auto;
     position: relative;
     height: 100%;
-    box-shadow: rgba(black, $shadowalph) fixpx(5) 0 fixpx(5),
-  rgba(black, $shadowalph) 0 fixpx(5) fixpx(5),
-  rgba(black, $shadowalph) fixpx(-5) 0 fixpx(5),
-	rgba(black, $shadowalph) 0 0 0;
 }
 
 .btn, .btn:visited {
