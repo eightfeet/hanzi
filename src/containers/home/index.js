@@ -51,6 +51,15 @@ class Home extends Component {
 		});
 	}
 
+	onEnter = (e) => {
+		if (e.keyCode === 13) {
+			this.setState({
+				// 替换非中文
+				textInp: e.target.value.replace(/([^\u4e00-\u9fa5])/g,'')
+			}, () => this.onSubmit());
+		}
+	}
+
 
 	render() {
 		const {error, textInp} = this.state;
@@ -62,7 +71,7 @@ class Home extends Component {
 							<img src={blackwhite} className="w4" />
 						</div>
 						{error && <div className="al-c pd-1 bg-red white al-c radius-smaller mgb-5">{error}</div>}
-						<input className="ww mgb1 font" onwebkitspeechchange={this.onTextChange} onChange={this.onTextChange} type="text" value={textInp} x-webkit-speech />
+						<input onKeyDown={this.onEnter} className="ww mgb1 font" onwebkitspeechchange={this.onTextChange} onChange={this.onTextChange} type="text" value={textInp} x-webkit-speech />
 						<button className={s.submit} onClick={this.onSubmit}>确定</button>
 					</div>
 				</div>
