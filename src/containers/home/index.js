@@ -63,7 +63,7 @@ class Home extends Component {
 						</div>
 						{error && <div className="al-c pd-1 bg-red white al-c radius-smaller mgb-5">{error}</div>}
 						<input className="ww mgb1 font" onwebkitspeechchange={this.onTextChange} onChange={this.onTextChange} type="text" value={textInp} x-webkit-speech />
-						<button className="white font bg-gray pd-5 ww radius-smaller" onClick={this.onSubmit}>确定</button>
+						<button className={s.submit} onClick={this.onSubmit}>确定</button>
 					</div>
 				</div>
 			</div>
